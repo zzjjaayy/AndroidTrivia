@@ -27,7 +27,7 @@
                     android:id= "@+id/myHostNavFragment"
                     android:name= "androidx.navigation.fragment.NavHostFragment"
                     app:navGraph= "@navigation/navigation"
-                    app:navHostFragment= "true"/>
+                    app:defaultNavHost= "true"/>
                 <!--the fragment tag is used to set an initial fragment when the activity is first launched -->
                 <!--the navHostFragment tag is used to set whether this host will act for the back key as there can be multiple back buttons-->
         </LinearLayout>
