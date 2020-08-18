@@ -26,6 +26,7 @@ import androidx.core.app.ShareCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.example.android.navigation.databinding.FragmentGameWonBinding
 
 
@@ -42,23 +43,30 @@ class GameWonFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.winner_menu, menu)
+        if(getShareIntent().resolveActivity(activity!!.packageManager) != null) {
+            inflater.inflate(R.menu.winner_menu, menu)
+        }// the menu will inflate only when the package manager detects that some app can handle the request
     }
 
-    private fun getShareIntent() {
+    private fun getShareIntent() : Intent{
         val args = GameWonFragmentArgs.fromBundle(arguments!!)
         val shareIntent = ShareCompat.IntentBuilder.from(activity!!)
                 .setType("text/plain")
                 .setText(getString(R.string.share_success_text, args.numQuestions, args.numCorrect))
                 .intent
-        startActivity(shareIntent)
+        return shareIntent
     }
-    // used an android API for Intents called ShareCompat
-    // The code becomes more readable as we don't have to specify the intent type
+    // NOTE:
+    // had to change the function a bit to make it return an intent so that it can be used to
+    // resolveActivity in package manager for the onCreateOptionsMenu and for the sharing purpose when clicked.
+
+    private fun shareSuccess() {
+        startActivity(getShareIntent())
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.share -> getShareIntent()
+            R.id.share -> shareSuccess()
         }
         return super.onOptionsItemSelected(item)
     }
