@@ -17,19 +17,30 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <LinearLayout
+        <androidx.drawerlayout.widget.DrawerLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-                <fragment
+            android:id="@+id/drawerLayout">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id= "@+id/myHostNavFragment"
-                    android:name= "androidx.navigation.fragment.NavHostFragment"
-                    app:navGraph= "@navigation/navigation"
-                    app:defaultNavHost= "true"/>
-                <!--the fragment tag is used to set an initial fragment when the activity is first launched -->
-                <!--the navHostFragment tag is used to set whether this host will act for the back key as there can be multiple back buttons-->
-        </LinearLayout>
-
+                    android:orientation="vertical">
+                        <fragment
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id= "@+id/myHostNavFragment"
+                            android:name= "androidx.navigation.fragment.NavHostFragment"
+                            app:navGraph= "@navigation/navigation"
+                            app:defaultNavHost= "true"/>
+                        <!--the fragment tag is used to set an initial fragment when the activity is first launched -->
+                        <!--the navHostFragment tag is used to set whether this host will act for the back key as there can be multiple back buttons-->
+                </LinearLayout>
+                <com.google.android.material.navigation.NavigationView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:id="@+id/navView"
+                    app:menu="@menu/navdrawer_menu"
+                    app:headerLayout="@layout/nav_header"/>
+        </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
