@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -33,6 +34,12 @@ class GameWonFragment : Fragment() {
         val binding: FragmentGameWonBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_game_won, container, false)
         binding.nextMatchButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_gameWonFragment_to_gameFragment))
+
+        val args = GameWonFragmentArgs.fromBundle(arguments!!)
+        // the above function stores the arguments in the args variable
+        // had to use "!!" to use it
+        Toast.makeText(context, "${args.numQuestions} with ${args.numCorrect}", Toast.LENGTH_SHORT).show()
+        //Made a Toast Message
         return binding.root
     }
 }

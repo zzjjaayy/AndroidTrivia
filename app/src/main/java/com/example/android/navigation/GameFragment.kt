@@ -97,10 +97,15 @@ class GameFragment : Fragment() {
                         setQuestion()
                         binding.invalidateAll()
                     } else {
-                        view.findNavController().navigate(R.id.action_gameFragment_to_gameWonFragment)
+                        view.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameWonFragment(numQuestions, questionIndex))
+                        // changed to auto generated function "GameFragmentDirections" for passing arguments
+                        // these arguments are added in navigation.xml when clicked on the destination fragment
+                        // Now safeArgs will make sure that the code doesn't compile without these arguments
+                        // passed if their default values aren't set.
                     }
                 } else {
-                    view.findNavController().navigate(R.id.action_gameFragment_to_gameOverFragment2)
+                    view.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameOverFragment2())
+                    // changed to auto generated function "GameFragmentDirections" for passing arguments
                 }
             }
         }
