@@ -16,10 +16,9 @@
 
 package com.example.android.navigation
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -34,12 +33,30 @@ class GameWonFragment : Fragment() {
         val binding: FragmentGameWonBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_game_won, container, false)
         binding.nextMatchButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_gameWonFragment_to_gameFragment))
-
-        val args = GameWonFragmentArgs.fromBundle(arguments!!)
-        // the above function stores the arguments in the args variable
-        // had to use "!!" to use it
-        Toast.makeText(context, "${args.numQuestions} with ${args.numCorrect}", Toast.LENGTH_SHORT).show()
-        //Made a Toast Message
+        setHasOptionsMenu(true)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.winner_menu, menu)
+    }
+
+    private fun getShareIntent() {
+        val args = GameWonFragmentArgs.fromBundle(arguments!!)
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.setType("text/plain")
+                .putExtra(Intent.EXTRA_TEXT, getString(R.string.share_success_text, args.numQuestions, args.numCorrect))
+        startActivity(shareIntent)
+    }
+    // intent building and starting function
+    // the above function takes in the arguments passed and build and intent and ultimately startActivity.
+    // the getString function is working to put in the arguments in the String resource provided
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.share -> getShareIntent()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
